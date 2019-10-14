@@ -20,7 +20,8 @@ ENV XDG_CONFIG_HOME=/config
 ENV JACKETT_CMD=/opt/jackett/jackett
 
 RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
-    apk add --no-cache wget libcurl ca-certificates && \
+    apk add --no-cache libcurl ca-certificates && \
+    apk add --no-cache --virtual=.build-dependencies curl jq && \
     mkdir -p /opt/jackett &&\
     JACKETT_RELEASE=$(curl -sX GET "https://api.github.com/repos/Jackett/Jackett/releases" | \
             jq -r '.[0] | .tag_name') && \
@@ -45,7 +46,7 @@ RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/ed
     jackett_url=$(curl -s https://api.github.com/repos/Jackett/Jackett/releases/tags/"${Jackett_RELEASE}" | \
             jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH}) && \
     curl -L "${jackett_url}" | tar xf -C /opt/jackett --strip-components=1 &&\
-    apk del --no-cache wget
+    apk del .build-dependencies
 
 # ports and volumes
 EXPOSE 9117
