@@ -45,8 +45,7 @@ RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/ed
     esac &&\
     jackett_url=$(curl -s https://api.github.com/repos/Jackett/Jackett/releases/tags/"${JACKETT_RELEASE}" | \
             jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH}) && \
-    curl -o /tmp/jackett.tar.gz -L "${jackett_url}" &&\
-    tar xf /tmp/jackett.tar.gz -C /opt/jackett --strip-components=1 &&\
+    curl -o - -L "${jackett_url}" | tar x -C /opt/jackett --strip-components=1 &&\
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
     chmod 777 /opt/jackett -R && \
     apk del .build-dependencies
