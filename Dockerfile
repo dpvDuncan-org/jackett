@@ -54,4 +54,4 @@ RUN apk add --no-cache mono --repository http://dl-cdn.alpinelinux.org/alpine/ed
 EXPOSE 9117
 VOLUME /config
 
-CMD ["${JACKETT_BINARY}"]
+CMD ["${JACKETT_CMD}"]
