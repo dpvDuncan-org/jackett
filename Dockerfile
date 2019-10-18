@@ -28,9 +28,6 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     apt-get autoclean -qq && \
     apt-get install -qq -y curl jq libicu63 && \
     mkdir -p /opt/jackett &&\
-    echo '#! /bin/sh' > /start.sh && \
-    echo '/opt/jackett/jackett' >> /start.sh && \
-    chmod +x /start.sh && \
     JACKETT_RELEASE=$(curl -sX GET "https://api.github.com/repos/Jackett/Jackett/releases" | \
             jq -r '.[0] | .tag_name') && \
     case $ARCH in \
