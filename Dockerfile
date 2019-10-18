@@ -28,7 +28,7 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     apt-get autoclean -qq && \
     apt-get install -qq -y curl jq libicu63 && \
     mkdir -p /opt/jackett &&\
-    JACKETT_RELEASE=$(curl -sX GET "https://api.github.com/repos/Jackett/Jackett/releases" | \
+    JACKETT_RELEASE=$(curl -s "https://api.github.com/repos/Jackett/Jackett/releases" | \
             jq -r '.[0] | .tag_name') && \
     case $ARCH in \
         arm) \
@@ -47,7 +47,8 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     esac &&\
     jackett_url=$(curl -s https://api.github.com/repos/Jackett/Jackett/releases/tags/"${JACKETT_RELEASE}" | \
                 jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH}) && \
-    curl -o - -L "${jackett_url}" | tar xz -C /opt/jackett --strip-components=1 &&\
+    echo "Download ${jackett_url}" && \
+    curl -s -o - -L "${jackett_url}" | tar xz -C /opt/jackett --strip-components=1 &&\
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
     chmod 777 /opt/jackett -R && \
     mkdir /config && \
