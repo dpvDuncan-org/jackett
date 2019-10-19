@@ -30,14 +30,14 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     mkdir -p /opt/jackett &&\
     JACKETT_RELEASE=$(curl -s "https://api.github.com/repos/Jackett/Jackett/releases" | \
             jq -r '.[0] | .tag_name') && \
-    echo "Start Case" && \
-    if [ ${ARCH} == "arm" ]; \
+    echo "Arch = ${ARCH}" && \
+    if [ "${ARCH}" == "arm" ]; \
     then JACKETT_ARCH="LinuxARM32"; \
-    elif [ ${ARCH} == "aarch64" ]; \
+    elif [ "${ARCH}" == "aarch64" ]; \
     then JACKETT_ARCH="LinuxARM64"; \
-    elif [ ${ARCH} == "amd64" ]; \
+    elif [ "${ARCH}" == "amd64" ]; \
     then JACKETT_ARCH="LinuxAMDx64"; \
-    else echo 'Unknown arch: ${ARCH}' && exit 1; \
+    else "echo Unknown arch: ${ARCH}" && exit 1; \
     fi && \
     jackett_url=$(curl -s https://api.github.com/repos/Jackett/Jackett/releases/tags/"${JACKETT_RELEASE}" | \
                 jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH}) && \
