@@ -30,6 +30,7 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     mkdir -p /opt/jackett &&\
     JACKETT_RELEASE=$(curl -s "https://api.github.com/repos/Jackett/Jackett/releases" | \
             jq -r '.[0] | .tag_name') && \
+    echo "Start Case" && \
     case $ARCH in \
         arm) \
             JACKETT_ARCH="LinuxARM32" \
@@ -41,7 +42,7 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
             JACKETT_ARCH="LinuxAMDx64" \
         ;; \
         *) \
-            echo 'Unknown arch' && \
+            echo 'Unknown arch: ${ARCH}' && \
             exit 1 \
         ;; \
     esac &&\
