@@ -29,6 +29,7 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     apt-get install -qq -y curl jq libicu63 && \
     mkdir -p /opt/jackett &&\
     set -x && \
+    uname -m && \
     echo "Arch = ${ARCH}" && \
     case "${ARCH}" in \
     "arm") \
