@@ -28,26 +28,27 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     apt-get autoclean -qq && \
     apt-get install -qq -y curl jq libicu63 && \
     mkdir -p /opt/jackett &&\
-    JACKETT_RELEASE=$(curl -s "https://api.github.com/repos/Jackett/Jackett/releases" | \
-            jq -r '.[0] | .tag_name') && \
+    set -x && \
     echo "Arch = ${ARCH}" && \
     case "${ARCH}" in \
     "arm") \
         JACKETT_ARCH="LinuxARM32" && \
-        break \
+        echo "JACKETT_ARCH=${JACKETT_ARCH}" \
         ;; \
     "aarch64") \
         JACKETT_ARCH="LinuxARM64" && \
-        break \
+        echo "JACKETT_ARCH=${JACKETT_ARCH}" \
         ;; \
     "amd64") \
         JACKETT_ARCH="LinuxAMDx64" && \
-        break \
+        echo "JACKETT_ARCH=${JACKETT_ARCH}" \
         ;; \
     *) \
         echo "Unknown arch: ${ARCH}" && exit 1 \
         ;; \
     esac &&\
+    JACKETT_RELEASE=$(curl -s "https://api.github.com/repos/Jackett/Jackett/releases" | \
+            jq -r '.[0] | .tag_name') && \
     jackett_url=$(curl -s https://api.github.com/repos/Jackett/Jackett/releases/tags/"${JACKETT_RELEASE}" | \
                 jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH}) && \
     echo "Download ${jackett_url}" && \
