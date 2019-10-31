@@ -11,6 +11,10 @@ for arch in ${verified_build_architectures[@]}; do
   echo "✅ building $arch"
   echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 
+  JACKETT_ARCH=${jackett_arch_map[${arch}]}
+  JACKETT_RELEASE=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases" | jq -r '.[0] | .tag_name') 
+  JACKETT_URL=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases/tags/${JACKETT_RELEASE}" | jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH})
+
   BASE_IMAGE_PREFIX="${base_image_prefix_map[${arch}]}"
   docker build \
     --build-arg BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX} \
