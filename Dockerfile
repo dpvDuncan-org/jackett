@@ -1,18 +1,7 @@
-# see hooks/build and hooks/.config
-#ARG BASE_IMAGE_PREFIX
-#FROM ${BASE_IMAGE_PREFIX}alpine
-
-# see hooks/post_checkout
-#ARG ARCH
-#COPY .gitignore qemu-${ARCH}-static* /usr/bin/
-
-# see hooks/build and hooks/.config
 ARG BASE_IMAGE_PREFIX
 FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
 
-# see hooks/post_checkout
-#ARG ARCH
-#COPY qemu-${ARCH}-static /usr/bin
+ARG ARCH
 
 ENV XDG_CONFIG_HOME=/config
 ENV XDG_DATA_HOME=/config
