@@ -1,14 +1,21 @@
 FROM multiarch/qemu-user-static as qemu
 
 ARG BASE_IMAGE_PREFIX
-ARG ARCH
+
 FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
+
+ARG ARCH
 
 COPY --from=qemu /usr/bin/qemu-${ARCH}-static /usr/bin
 
 ARG JACKETT_RELEASE
 ARG JACKETT_ARCH
 ARG JACKETT_URL
+
+RUN echo "JACKETT_RELEASE=${JACKETT_RELEASE}" && \
+    echo "JACKETT_ARCH=${JACKETT_ARCH}" && \
+    echo "JACKETT_URL=${JACKETT_URL}" && \
+    echo "ARCH=${ARCH}"
 
 ENV JACKETT_RELEASE=${JACKETT_RELEASE}
 ENV JACKETT_ARCH=${JACKETT_ARCH}
