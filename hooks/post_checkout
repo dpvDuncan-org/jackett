@@ -4,21 +4,21 @@ set -eu
 echo "🔵 post_checkout"
 source hooks/.config
 
-echo "✅ Install qemu + binfmt support"
-echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
+#echo "✅ Install qemu + binfmt support"
+#echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 # it's an Ubuntu VM and you can install stuff.
-apt-get update
+#apt-get update
 #apt-get install -y curl qemu-user-static binfmt-support jq moreutils
-apt-get install -y curl jq moreutils
-curl http://archive.ubuntu.com/ubuntu/pool/universe/q/qemu/qemu-user-static_3.1+dfsg-2ubuntu3.5_amd64.deb -o qemu-user-static.deb
-dpkg -i qemu-user-static.deb
+#apt-get install -y curl jq moreutils
+#curl http://archive.ubuntu.com/ubuntu/pool/universe/q/qemu/qemu-user-static_3.1+dfsg-2ubuntu3.5_amd64.deb -o qemu-user-static.deb
+#dpkg -i qemu-user-static.deb
 
 # Sadly docker itself uses Docker EE 17.06 on Dockerhub which does not support
 # manifests.
 echo "✅ Install a fresh docker cli binary"
 echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 
-curl https://download.docker.com/linux/static/stable/x86_64/docker-18.09.1.tgz | \
+curl https://download.docker.com/linux/static/stable/x86_64/docker-19.03.4.tgz | \
   tar xvz docker/docker
 
 echo "✅ Build a usable config.json file"
@@ -33,8 +33,8 @@ jq --null-input --argjson auths "$DOCKERCFG" '. + {auths: $auths}' | \
 jq --arg experimental enabled '. + {experimental: $experimental}' | \
 sponge ~/.docker/config.json
 
-echo "✅ Copy qemu binaries into docker build context"
-echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
+#echo "✅ Copy qemu binaries into docker build context"
+#echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 # The current setup copies the qemu binary into the image (see Dockerfile)
 # Pro:
 #      - it's easy to run non-amd64 images on amd64 systems for debugging
@@ -44,8 +44,6 @@ echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯�
 #      - use a multistage Dockerfile (no RUN in the last stage possible of course)
 #      - wait for https://github.com/moby/moby/issues/14080
 #
-for arch in ${build_architectures[@]}; do
-  cp /usr/bin/qemu-${docker_qemu_arch_map[${arch}]}-static qemu-${arch}-static
-done
-
-ls -la
+#for arch in ${build_architectures[@]}; do
+#  cp /usr/bin/qemu-${docker_qemu_arch_map[${arch}]}-static qemu-${arch}-static
+#done
