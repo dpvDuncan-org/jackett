@@ -1,8 +1,7 @@
-ARG ARCH
-
 FROM multiarch/qemu-user-static as qemu
 
 ARG BASE_IMAGE_PREFIX
+ARG ARCH
 FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
 
 COPY --from=qemu /usr/bin/qemu-${ARCH}-static /usr/bin
