@@ -1,4 +1,7 @@
 FROM multiarch/qemu-user-static as qemu
+ARG ARCH
+
+RUN if [ ! -f /usr/bin/qemu-${ARCH}-static ] ; then touch /usr/bin/qemu-${ARCH}-static; fi
 
 ARG BASE_IMAGE_PREFIX
 
