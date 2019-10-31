@@ -15,6 +15,9 @@ for arch in ${verified_build_architectures[@]}; do
   docker build \
     --build-arg BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX} \
     --build-arg ARCH=${arch} \
+    --build-arg JACKETT_RELEASE=${JACKETT_RELEASE} \
+    --build-arg JACKETT_ARCH=${JACKETT_ARCH} \
+    --build-arg JACKETT_URL=${JACKETT_URL} \
     --file $DOCKERFILE_PATH \
     --tag "${IMAGE_NAME}-${arch}"  \
     .
