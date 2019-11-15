@@ -16,4 +16,4 @@ then
         USERNAME=jackett
 fi
 
-su - $USERNAME -c '/opt/jackett/jackett --NoUpdates'
+su $USERNAME -c '/opt/jackett/jackett --NoUpdates'
