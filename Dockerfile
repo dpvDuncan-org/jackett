@@ -28,7 +28,7 @@ RUN apt-get autoclean -qq
 RUN apt-get install -qq -y curl libicu63
 RUN mkdir -p /opt/jackett /config
 RUN curl -k -s -o - -L "${JACKETT_URL}" | tar xz -C /opt/jackett --strip-components=1
-RUN chmod 777 /opt/jackett -R
+RUN chmod -R 777 /opt/jackett /config /start.sh
 RUN apt-get purge -qq curl
 RUN apt-get autoremove -qq
 RUN apt-get autoclean -qq
