@@ -6,13 +6,13 @@ USERNAME=$(getent passwd $PUID | cut -d: -f1)
 
 if [ ! $GROUPNAME ]
 then
-        addgroup -g $PGID jackett
+        groupadd -g $PGID jackett
         GROUPNAME=jackett
 fi
 
 if [ ! $USERNAME ]
 then
-        adduser -G $GROUPNAME -u $PUID -D jackett
+        useradd -G $GROUPNAME -u $PUID -D jackett
         USERNAME=jackett
 fi
 
