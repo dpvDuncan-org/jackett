@@ -12,7 +12,7 @@ fi
 
 if [ ! $USERNAME ]
 then
-        useradd -G $GROUPNAME -u $PUID jackett
+        useradd -m -G $GROUPNAME -u $PUID jackett
         USERNAME=jackett
 fi
 
