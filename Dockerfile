@@ -4,7 +4,6 @@ FROM multiarch/qemu-user-static as qemu
 
 FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
 
-ARG ARCH
 ARG JACKETT_RELEASE
 ARG JACKETT_ARCH
 ARG JACKETT_URL
