@@ -12,8 +12,10 @@ for arch in ${build_architectures[@]}; do
   echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 
   JACKETT_ARCH=${jackett_arch_map[${arch}]}
-  JACKETT_RELEASE=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases" | jq -r '.[0] | .tag_name') 
-  JACKETT_URL=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases/tags/${JACKETT_RELEASE}" | jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH})
+  # JACKETT_RELEASE=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases" | jq -r '.[0] | .tag_name') 
+  # JACKETT_URL=$(curl -k -s "https://api.github.com/repos/Jackett/Jackett/releases/tags/${JACKETT_RELEASE}" | jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH})
+  JACKETT_RELEASE=$(curl -k -s "https://api.github.com/repos/abeloin/Jackett/releases" | jq -r '.[0] | .tag_name') 
+  JACKETT_URL=$(curl -k -s "https://api.github.com/repos/abeloin/Jackett/releases/tags/${JACKETT_RELEASE}" | jq -r '.assets[].browser_download_url' | grep ${JACKETT_ARCH})
 
   docker exec docker_daemon docker build \
     --squash \
