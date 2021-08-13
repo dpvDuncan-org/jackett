@@ -1,7 +1,5 @@
 ARG BASE_IMAGE_PREFIX
 
-FROM multiarch/qemu-user-static as qemu
-
 FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
 
 ARG JACKETT_RELEASE
@@ -14,7 +12,6 @@ ENV XDG_CONFIG_HOME=/config
 ENV XDG_DATA_HOME=/config
 ENV DEBIAN_FRONTEND=noninteractive
 
-COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
 
 RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty
@@ -32,7 +29,7 @@ RUN apt-get purge -qq curl
 RUN apt-get autoremove -qq
 RUN apt-get autoclean -qq
 
-RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
+RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # ports and volumes
 EXPOSE 9117
