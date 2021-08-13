@@ -24,9 +24,9 @@ for arch in ${build_architectures[@]}; do
     --build-arg JACKETT_RELEASE=${JACKETT_RELEASE} \
     --build-arg JACKETT_ARCH=${JACKETT_ARCH} \
     --build-arg JACKETT_URL=${JACKETT_URL} \
-    --file /build/$DOCKERFILE_PATH \
+    --file /build/${IMAGE_NAME_simple}/${DOCKERFILE_PATH} \
     --tag "${IMAGE_NAME}-${arch}"  \
-    /build
+    /build/${IMAGE_NAME_simple}
 done
 
 echo "✅ images built:"
