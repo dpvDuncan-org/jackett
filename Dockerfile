@@ -22,7 +22,7 @@ RUN apt-get update -qq
 RUN apt-get dist-upgrade -qq
 RUN apt-get autoremove -qq
 RUN apt-get autoclean -qq
-RUN apt-get install -qq -y curl libicu63
+RUN apt-get install -qq -y curl libicu67
 RUN mkdir -p /opt/jackett /config
 RUN curl -k -s -o - -L "${JACKETT_URL}" | tar xz -C /opt/jackett --strip-components=1
 RUN chmod -R 777 /opt/jackett /config /start.sh
